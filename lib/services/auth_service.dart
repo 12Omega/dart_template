@@ -1,38 +1,6 @@
 // lib/services/auth_service.dart
 
 class AuthService {
-  // Placeholder for login logic
-  Future<bool> login(String email, String password) async {
-    // In a real app, you'd call your backend API here
-    await Future.delayed(const Duration(seconds: 1)); // Simulate network delay
-    // TODO: Replace with actual authentication logic
-    if (email == 'test@example.com' && password == 'password') {
-      // Simulate successful login
-      // You might store a token or user session here
-      return true;
-    }
-    return false;
-  }
-
-  // Placeholder for registration logic
-  Future<bool> register(String fullName, String email, String password) async {
-    // In a real app, you'd call your backend API here
-    await Future.delayed(const Duration(seconds: 1)); // Simulate network delay
-    // TODO: Replace with actual registration logic
-    // For now, assume registration is always successful if email is not the test email
-    if (email != 'test@example.com') {
-      return true;
-    }
-    return false;
-  }
-
-  // Placeholder for logout logic
-  Future<void> logout() async {
-    // In a real app, you'd clear tokens/session and call backend if necessary
-    await Future.delayed(const Duration(milliseconds: 500));
-    // TODO: Implement actual logout
-  }
-
   // Placeholder for checking login status
   // In a real app, this would check for a valid token or session
   Future<bool> isLoggedIn() async {

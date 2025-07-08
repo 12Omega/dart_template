@@ -333,7 +333,7 @@ class _BookingCard extends StatelessWidget {
                       width: 50,
                       height: 50,
                       decoration: BoxDecoration(
-                        color: kPrimaryColor.withOpacity(0.1),
+                        color: kPrimaryColor.withAlpha((255 * 0.1).round()),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: const Icon(

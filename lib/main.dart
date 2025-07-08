@@ -1,11 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:provider/provider.dart';
-import 'package:smart_parking_app/screens/login_screen.dart';
-import 'package:smart_parking_app/screens/home_screen.dart';
-import 'package:smart_parking_app/services/auth_service.dart';
-
-import 'package:flutter_dotenv/flutter_dotenv.dart'; // Ensure this import is present if dotenv is used
 import 'package:provider/provider.dart';
 import 'package:smart_parking_app/screens/login_screen.dart';
 import 'package:smart_parking_app/screens/home_screen.dart';
@@ -67,12 +60,8 @@ class SmartParkingApp extends StatelessWidget {
       ),
       home: Consumer<AuthService>(
         builder: (context, authService, _) {
-          // Ensure AuthService is not null before calling methods on it
-          if (authService == null) {
-            return const Scaffold(
-              body: Center(child: Text("AuthService not available")),
-            );
-          }
+          // authService is guaranteed to be non-null here by the Consumer
+          // when used with Provider(create: ...), unless the create function itself throws.
           return FutureBuilder<bool>(
             future: authService.isLoggedIn(),
             builder: (context, snapshot) {

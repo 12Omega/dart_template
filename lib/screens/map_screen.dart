@@ -84,7 +84,8 @@ class _MapScreenState extends State<MapScreen> {
       final parkingService = Provider.of<ParkingService>(context, listen: false);
       final spots = await parkingService.getNearbyParkingSpots(
           _currentPosition?.latitude ?? _defaultPosition.latitude,
-          _currentPosition?.longitude ?? _defaultPosition.longitude
+          _currentPosition?.longitude ?? _defaultPosition.longitude,
+          1.0 // Added radius parameter
       );
 
       if (mounted) {

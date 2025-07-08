@@ -10,7 +10,7 @@ class BookingService {
     // Simulate backend assigning an ID and createdAt if not already set
     final newBooking = booking.copyWith(
       id: booking.id.isEmpty ? DateTime.now().millisecondsSinceEpoch.toString() : booking.id,
-      createdAt: booking.createdAt ?? DateTime.now(),
+      createdAt: booking.createdAt,
       status: BookingStatus.pending, // Initial status
     );
     // TODO: Replace with actual API call and response handling
@@ -19,7 +19,7 @@ class BookingService {
   }
 
   // Placeholder for fetching user's booking history
-  Future<List<Booking>> getBookingHistory() async {
+  Future<List<Booking>> getUserBookings() async {
     await Future.delayed(const Duration(seconds: 1));
     // TODO: Replace with actual API call to fetch booking history
     // Return an empty list or mock data for now

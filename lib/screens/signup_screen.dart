@@ -109,8 +109,8 @@ class _SignupScreenState extends State<SignupScreen> {
                   const SizedBox(height: 40),
                   CustomTextField(
                     controller: _fullNameController,
-                    label: 'Full Name',
-                    hint: 'Enter your full name',
+                    labelText: 'Full Name',
+                    hintText: 'Enter your full name',
                     keyboardType: TextInputType.name,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -123,8 +123,8 @@ class _SignupScreenState extends State<SignupScreen> {
                   const SizedBox(height: 16),
                   CustomTextField(
                     controller: _emailController,
-                    label: 'Email',
-                    hint: 'Enter your email',
+                    labelText: 'Email',
+                    hintText: 'Enter your email',
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -141,8 +141,8 @@ class _SignupScreenState extends State<SignupScreen> {
                   const SizedBox(height: 16),
                   CustomTextField(
                     controller: _passwordController,
-                    label: 'Password',
-                    hint: 'Enter your password',
+                    labelText: 'Password',
+                    hintText: 'Enter your password',
                     obscureText: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -158,8 +158,8 @@ class _SignupScreenState extends State<SignupScreen> {
                   const SizedBox(height: 16),
                   CustomTextField(
                     controller: _confirmPasswordController,
-                    label: 'Confirm Password',
-                    hint: 'Confirm your password',
+                    labelText: 'Confirm Password',
+                    hintText: 'Confirm your password',
                     obscureText: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {

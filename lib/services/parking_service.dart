@@ -56,7 +56,7 @@ class ParkingService {
   }
 
   // Placeholder for fetching parking spots near a location
-  Future<List<ParkingSpot>> findParkingSpotsNear(double latitude, double longitude, double radius) async {
+  Future<List<ParkingSpot>> getNearbyParkingSpots(double latitude, double longitude, double radius) async {
     await Future.delayed(const Duration(seconds: 1));
     // In a real app, the backend would handle this query.
     // For now, filter the mock data (very simplified).

@@ -99,8 +99,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 60),
                   CustomTextField(
                     controller: _emailController,
-                    label: 'Email',
-                    hint: 'Enter your email',
+                    labelText: 'Email',
+                    hintText: 'Enter your email',
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -117,8 +117,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 20),
                   CustomTextField(
                     controller: _passwordController,
-                    label: 'Password',
-                    hint: 'Enter your password',
+                    labelText: 'Password',
+                    hintText: 'Enter your password',
                     obscureText: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
