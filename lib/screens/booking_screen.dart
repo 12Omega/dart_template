@@ -7,7 +7,7 @@ import 'package:smart_parking_app/models/parking_spot.dart';
 import 'package:smart_parking_app/screens/payment_screen.dart';
 import 'package:smart_parking_app/services/booking_service.dart';
 import 'package:smart_parking_app/utils/constants.dart';
-import 'package:smart_parking_app/widgets/custom_button.dart';
+import 'package:smart_parking_app/presentation/widgets/custom_button.dart';
 
 class BookingScreen extends StatefulWidget {
   final ParkingSpot parkingSpot;
@@ -39,7 +39,7 @@ class _BookingScreenState extends State<BookingScreen> {
     // Extract rate value (e.g. "Rs. 60/hr" -> 60)
     final rateStr = widget.parkingSpot.rate;
     final rateValue = double.tryParse(
-      rateStr.replaceAll(RegExp(r'[^0-9.]'), '')
+        rateStr.replaceAll(RegExp(r'[^0-9.]'), '')
     ) ?? 50; // Default to Rs. 50 if parsing fails
 
     return rateValue * _hours;
@@ -65,7 +65,7 @@ class _BookingScreenState extends State<BookingScreen> {
           picked.hour,
           picked.minute,
         );
-        
+
         // Ensure end time is at least 1 hour after start time
         if (_endDate.isBefore(_startDate.add(const Duration(hours: 1)))) {
           _endDate = _startDate.add(const Duration(hours: 1));
@@ -87,7 +87,7 @@ class _BookingScreenState extends State<BookingScreen> {
         picked.hour,
         picked.minute,
       );
-      
+
       // Ensure end time is after start time
       if (newEndDate.isAfter(_startDate)) {
         setState(() {
@@ -106,14 +106,14 @@ class _BookingScreenState extends State<BookingScreen> {
 
   Future<void> _proceedToPayment() async {
     if (!_formKey.currentState!.validate()) return;
-    
+
     setState(() {
       _isLoading = true;
     });
 
     try {
       final bookingService = Provider.of<BookingService>(context, listen: false);
-      
+
       final booking = Booking(
         id: '', // Will be assigned by backend
         parkingSpotId: widget.parkingSpot.id,
@@ -126,9 +126,9 @@ class _BookingScreenState extends State<BookingScreen> {
         status: BookingStatus.pending,
         createdAt: DateTime.now(),
       );
-      
+
       final createdBooking = await bookingService.createBooking(booking);
-      
+
       if (mounted) {
         Navigator.push(
           context,
@@ -240,7 +240,7 @@ class _BookingScreenState extends State<BookingScreen> {
                 ),
               ),
               const SizedBox(height: 24),
-              
+
               // Time Selection
               const Text(
                 'Select Parking Time',
@@ -270,7 +270,7 @@ class _BookingScreenState extends State<BookingScreen> {
                 ],
               ),
               const SizedBox(height: 24),
-              
+
               // Duration and Pricing Summary
               Container(
                 padding: const EdgeInsets.all(16),
@@ -323,7 +323,7 @@ class _BookingScreenState extends State<BookingScreen> {
                 ),
               ),
               const SizedBox(height: 24),
-              
+
               // Vehicle Details
               const Text(
                 'Vehicle Details',
@@ -376,7 +376,7 @@ class _BookingScreenState extends State<BookingScreen> {
                 },
               ),
               const SizedBox(height: 32),
-              
+
               // Book Now Button
               CustomButton(
                 label: 'Proceed to Payment',

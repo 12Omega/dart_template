@@ -5,7 +5,7 @@ import 'package:smart_parking_app/models/booking.dart';
 import 'package:smart_parking_app/screens/home_screen.dart';
 import 'package:smart_parking_app/services/booking_service.dart';
 import 'package:smart_parking_app/utils/constants.dart';
-import 'package:smart_parking_app/widgets/custom_button.dart';
+import 'package:smart_parking_app/presentation/widgets/custom_button.dart';
 import 'package:intl/intl.dart';
 
 class PaymentScreen extends StatefulWidget {
@@ -32,11 +32,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
     try {
       await Future.delayed(const Duration(seconds: 2)); // Simulate payment processing
-      
+
       final bookingService = Provider.of<BookingService>(context, listen: false);
       await bookingService.updateBookingStatus(
-        widget.booking.id, 
-        BookingStatus.confirmed
+          widget.booking.id,
+          BookingStatus.confirmed
       );
 
       if (mounted) {
@@ -103,7 +103,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               Navigator.of(context).pop(); // Close dialog
               Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (context) => const HomeScreen()),
-                (route) => false,
+                    (route) => false,
               );
             },
             child: const Text('Return to Home'),
@@ -116,7 +116,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   Widget _buildPaymentMethodCard(String method) {
     IconData icon;
     String title;
-    
+
     switch (method) {
       case 'card':
         icon = Icons.credit_card;
@@ -134,7 +134,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         icon = Icons.money;
         title = 'Unknown Method';
     }
-    
+
     return InkWell(
       onTap: () {
         setState(() {
@@ -145,12 +145,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
         decoration: BoxDecoration(
-          color: _selectedPaymentMethod == method 
-              ? kPrimaryColor.withOpacity(0.1) 
+          color: _selectedPaymentMethod == method
+              ? kPrimaryColor.withAlpha((255 * 0.1).round()) // Replaced withOpacity
               : Colors.white,
           border: Border.all(
-            color: _selectedPaymentMethod == method 
-                ? kPrimaryColor 
+            color: _selectedPaymentMethod == method
+                ? kPrimaryColor
                 : Colors.grey[300]!,
             width: 2,
           ),
@@ -161,15 +161,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: _selectedPaymentMethod == method 
-                    ? kPrimaryColor.withOpacity(0.2) 
+                color: _selectedPaymentMethod == method
+                    ? kPrimaryColor.withAlpha((255 * 0.2).round()) // Replaced withOpacity
                     : Colors.grey[100],
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 icon,
-                color: _selectedPaymentMethod == method 
-                    ? kPrimaryColor 
+                color: _selectedPaymentMethod == method
+                    ? kPrimaryColor
                     : Colors.grey[600],
               ),
             ),
@@ -179,8 +179,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 title,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: _selectedPaymentMethod == method 
-                      ? kPrimaryColor 
+                  color: _selectedPaymentMethod == method
+                      ? kPrimaryColor
                       : Colors.black,
                 ),
               ),
@@ -215,7 +215,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.1),
+                    color: Colors.grey.withAlpha((255 * 0.1).round()), // Replaced withOpacity
                     spreadRadius: 1,
                     blurRadius: 10,
                     offset: const Offset(0, 2),
@@ -261,12 +261,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
               ),
             ),
             const SizedBox(height: 24),
-            
+
             // Payment Amount
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: kPrimaryColor.withOpacity(0.05),
+                color: kPrimaryColor.withAlpha((255 * 0.05).round()), // Replaced withOpacity
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
@@ -291,7 +291,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               ),
             ),
             const SizedBox(height: 24),
-            
+
             // Payment Methods
             const Text(
               'Payment Method',
@@ -303,12 +303,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
             const SizedBox(height: 16),
             ...List.generate(
               _paymentMethods.length,
-              (index) => Padding(
+                  (index) => Padding(
                 padding: const EdgeInsets.only(bottom: 12),
                 child: _buildPaymentMethodCard(_paymentMethods[index]),
               ),
             ),
-            
+
             // Card Details (only show if card payment is selected)
             if (_selectedPaymentMethod == 'card')
               Column(
@@ -368,9 +368,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   ),
                 ],
               ),
-              
+
             const SizedBox(height: 32),
-            
+
             // Payment Button
             CustomButton(
               label: 'Pay Rs. ${widget.booking.amount.toStringAsFixed(2)}',

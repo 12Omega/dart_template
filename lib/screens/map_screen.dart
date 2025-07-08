@@ -19,7 +19,7 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   final Completer<GoogleMapController> _controller = Completer();
   final Set<Marker> _markers = {};
-  
+
   // Default position for Kathmandu (Thamel area)
   static const LatLng _defaultPosition = LatLng(27.7172, 85.3240);
   LatLng? _currentPosition;
@@ -45,16 +45,16 @@ class _MapScreenState extends State<MapScreen> {
           throw Exception('Location permissions are denied');
         }
       }
-      
+
       if (permission == LocationPermission.deniedForever) {
         throw Exception('Location permissions are permanently denied');
       }
-      
+
       // Get current position
       final Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
-      
+
       setState(() {
         _currentPosition = LatLng(position.latitude, position.longitude);
         _isLoading = false;
@@ -83,10 +83,10 @@ class _MapScreenState extends State<MapScreen> {
     try {
       final parkingService = Provider.of<ParkingService>(context, listen: false);
       final spots = await parkingService.getNearbyParkingSpots(
-        _currentPosition?.latitude ?? _defaultPosition.latitude, 
-        _currentPosition?.longitude ?? _defaultPosition.longitude
+          _currentPosition?.latitude ?? _defaultPosition.latitude,
+          _currentPosition?.longitude ?? _defaultPosition.longitude
       );
-      
+
       if (mounted) {
         setState(() {
           _parkingSpots = spots;
@@ -107,7 +107,7 @@ class _MapScreenState extends State<MapScreen> {
 
   void _updateMarkers() {
     Set<Marker> markers = {};
-    
+
     // Add current location marker
     if (_currentPosition != null) {
       markers.add(
@@ -119,7 +119,7 @@ class _MapScreenState extends State<MapScreen> {
         ),
       );
     }
-    
+
     // Add parking spot markers
     for (var spot in _parkingSpots) {
       markers.add(
@@ -127,9 +127,9 @@ class _MapScreenState extends State<MapScreen> {
           markerId: MarkerId(spot.id),
           position: LatLng(spot.latitude, spot.longitude),
           icon: BitmapDescriptor.defaultMarkerWithHue(
-            spot.availableSpots > 0 
-              ? BitmapDescriptor.hueGreen 
-              : BitmapDescriptor.hueRed
+              spot.availableSpots > 0
+                  ? BitmapDescriptor.hueGreen
+                  : BitmapDescriptor.hueRed
           ),
           infoWindow: InfoWindow(
             title: spot.name,
@@ -209,7 +209,7 @@ class _MapScreenState extends State<MapScreen> {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
+                    color: Colors.grey.withAlpha((255 * 0.3).round()), // Replaced withOpacity
                     spreadRadius: 2,
                     blurRadius: 5,
                     offset: const Offset(0, 3),
@@ -264,7 +264,7 @@ class _MapScreenState extends State<MapScreen> {
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.3),
+                  color: Colors.grey.withAlpha((255 * 0.3).round()), // Replaced withOpacity
                   spreadRadius: 1,
                   blurRadius: 5,
                   offset: const Offset(0, 3),

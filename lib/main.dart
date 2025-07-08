@@ -5,14 +5,24 @@ import 'package:smart_parking_app/screens/login_screen.dart';
 import 'package:smart_parking_app/screens/home_screen.dart';
 import 'package:smart_parking_app/services/auth_service.dart';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart'; // Ensure this import is present if dotenv is used
+import 'package:provider/provider.dart';
+import 'package:smart_parking_app/screens/login_screen.dart';
+import 'package:smart_parking_app/screens/home_screen.dart';
+import 'package:smart_parking_app/services/auth_service.dart';
+import 'package:smart_parking_app/services/booking_service.dart';
+import 'package:smart_parking_app/services/parking_service.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: '.env');
-  
+  // await dotenv.load(fileName: '.env'); // .env file is not present, commented out
+
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => AuthService()),
+        Provider(create: (_) => AuthService()), // Changed to Provider
+        Provider(create: (_) => BookingService()),
+        Provider(create: (_) => ParkingService()),
       ],
       child: const SmartParkingApp(),
     ),
@@ -28,13 +38,13 @@ class SmartParkingApp extends StatelessWidget {
       title: 'Smart Parking App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blue, // Consider using kPrimaryColor from constants
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF0077B6),
-          primary: const Color(0xFF0077B6),
-          secondary: const Color(0xFF00B4D8),
+          seedColor: const Color(0xFF0077B6), // Consider using kPrimaryColor
+          primary: const Color(0xFF0077B6),   // Consider using kPrimaryColor
+          secondary: const Color(0xFF00B4D8), // Consider using kSecondaryColor
         ),
-        fontFamily: 'Roboto',
+        fontFamily: 'Roboto', // Ensure this font is in pubspec.yaml and assets
         textTheme: const TextTheme(
           displayLarge: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
           displayMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -42,7 +52,7 @@ class SmartParkingApp extends StatelessWidget {
           bodyMedium: TextStyle(fontSize: 14),
         ),
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xFF0077B6),
+          backgroundColor: Color(0xFF0077B6), // Consider using kPrimaryColor
           foregroundColor: Colors.white,
           elevation: 0,
         ),
@@ -50,13 +60,19 @@ class SmartParkingApp extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(10), // Consider kDefaultBorderRadius
             ),
           ),
         ),
       ),
       home: Consumer<AuthService>(
         builder: (context, authService, _) {
+          // Ensure AuthService is not null before calling methods on it
+          if (authService == null) {
+            return const Scaffold(
+              body: Center(child: Text("AuthService not available")),
+            );
+          }
           return FutureBuilder<bool>(
             future: authService.isLoggedIn(),
             builder: (context, snapshot) {
@@ -65,7 +81,13 @@ class SmartParkingApp extends StatelessWidget {
                   body: Center(child: CircularProgressIndicator()),
                 );
               }
-              
+              // Handle potential error in snapshot
+              if (snapshot.hasError) {
+                return Scaffold(
+                  body: Center(child: Text("Error checking login state: ${snapshot.error}")),
+                );
+              }
+
               final isLoggedIn = snapshot.data ?? false;
               return isLoggedIn ? const HomeScreen() : const LoginScreen();
             },

@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:smart_parking_app/screens/login_screen.dart';
 import 'package:smart_parking_app/services/auth_service.dart';
 import 'package:smart_parking_app/utils/constants.dart';
-import 'package:smart_parking_app/widgets/custom_button.dart';
-import 'package:smart_parking_app/widgets/custom_text_field.dart';
+import 'package:smart_parking_app/presentation/widgets/custom_button.dart';
+import 'package:smart_parking_app/presentation/widgets/custom_text_field.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -46,7 +46,7 @@ class _SignupScreenState extends State<SignupScreen> {
         _emailController.text.trim(),
         _passwordController.text,
       );
-      
+
       if (success && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(

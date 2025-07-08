@@ -1,4 +1,6 @@
 // lib/domain/entities/parking_spot_entity.dart
+import 'dart:math' as math;
+
 class ParkingSpotEntity {
   final String id;
   final String name;
@@ -32,45 +34,47 @@ class ParkingSpotEntity {
     // In a real app, use the Haversine formula or a Maps API
     return _calculateDistance(latitude, longitude, lat, lng);
   }
-  
+
   // Helper method to calculate distance using Haversine formula
   double _calculateDistance(double lat1, double lon1, double lat2, double lon2) {
     const double earthRadius = 6371; // in kilometers
-    
+
     double dLat = _toRadians(lat2 - lat1);
     double dLon = _toRadians(lon2 - lon1);
-    
-    double a = 
-      (dLat / 2).sin() * (dLat / 2).sin() +
-      (dLon / 2).sin() * (dLon / 2).sin() * 
-      _toRadians(lat1).cos() * _toRadians(lat2).cos();
-      
-    double c = 2 * (a.sqrt()).asin();
+
+    // Haversine formula
+    // a = sin²(Δφ/2) + cos φ1 ⋅ cos φ2 ⋅ sin²(Δλ/2)
+    // c = 2 ⋅ atan2( √a, √(1−a) )
+    // d = R ⋅ c
+    double a = math.sin(dLat / 2) * math.sin(dLat / 2) +
+        math.cos(_toRadians(lat1)) * math.cos(_toRadians(lat2)) *
+            math.sin(dLon / 2) * math.sin(dLon / 2);
+    double c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a));
     return earthRadius * c; // Distance in km
   }
-  
+
   double _toRadians(double degree) {
-    return degree * (3.141592653589793 / 180);
+    return degree * (math.pi / 180);
   }
-  
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is ParkingSpotEntity &&
-      other.id == id &&
-      other.name == name &&
-      other.address == address &&
-      other.latitude == latitude &&
-      other.longitude == longitude;
+        other.id == id &&
+        other.name == name &&
+        other.address == address &&
+        other.latitude == latitude &&
+        other.longitude == longitude;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-      name.hashCode ^
-      address.hashCode ^
-      latitude.hashCode ^
-      longitude.hashCode;
+    name.hashCode ^
+    address.hashCode ^
+    latitude.hashCode ^
+    longitude.hashCode;
   }
 }

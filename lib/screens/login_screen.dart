@@ -4,8 +4,8 @@ import 'package:smart_parking_app/screens/home_screen.dart';
 import 'package:smart_parking_app/screens/signup_screen.dart';
 import 'package:smart_parking_app/services/auth_service.dart';
 import 'package:smart_parking_app/utils/constants.dart';
-import 'package:smart_parking_app/widgets/custom_button.dart';
-import 'package:smart_parking_app/widgets/custom_text_field.dart';
+import 'package:smart_parking_app/presentation/widgets/custom_button.dart';
+import 'package:smart_parking_app/presentation/widgets/custom_text_field.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -20,7 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
   String _errorMessage = '';
-  
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -42,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
         _emailController.text.trim(),
         _passwordController.text,
       );
-      
+
       if (success && mounted) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => const HomeScreen()),

@@ -1,5 +1,6 @@
 // lib/models/parking_spot.dart
 import 'dart:convert';
+import 'dart:math' as math;
 
 class ParkingSpot {
   final String id;
@@ -60,9 +61,9 @@ class ParkingSpot {
       openHours: map['openHours'] ?? '24 hours',
       rating: map['rating']?.toDouble() ?? 0.0,
       features: List<String>.from(map['features'] ?? []),
-      updatedAt: map['updatedAt'] != null 
-        ? DateTime.parse(map['updatedAt'])
-        : DateTime.now(),
+      updatedAt: map['updatedAt'] != null
+          ? DateTime.parse(map['updatedAt'])
+          : DateTime.now(),
     );
   }
 
@@ -104,31 +105,33 @@ class ParkingSpot {
   String toString() {
     return 'ParkingSpot(id: $id, name: $name, address: $address, latitude: $latitude, longitude: $longitude, capacity: $capacity, availableSpots: $availableSpots, rate: $rate, openHours: $openHours, rating: $rating, features: $features, updatedAt: $updatedAt)';
   }
-  
+
   // Calculate distance from current position
   double distanceFrom(double lat, double lng) {
     // Simple Euclidean distance for demo purposes
     // In a real app, use the Haversine formula or a Maps API
     return _calculateDistance(latitude, longitude, lat, lng);
   }
-  
+
   // Helper method to calculate distance using Haversine formula
   double _calculateDistance(double lat1, double lon1, double lat2, double lon2) {
     const double earthRadius = 6371; // in kilometers
-    
+
     double dLat = _toRadians(lat2 - lat1);
     double dLon = _toRadians(lon2 - lon1);
-    
-    double a = 
-      (dLat / 2).sin() * (dLat / 2).sin() +
-      (dLon / 2).sin() * (dLon / 2).sin() * 
-      _toRadians(lat1).cos() * _toRadians(lat2).cos();
-      
-    double c = 2 * (a.sqrt()).asin();
+
+    // Haversine formula
+    // a = sin²(Δφ/2) + cos φ1 ⋅ cos φ2 ⋅ sin²(Δλ/2)
+    // c = 2 ⋅ atan2( √a, √(1−a) )
+    // d = R ⋅ c
+    double a = math.sin(dLat / 2) * math.sin(dLat / 2) +
+        math.cos(_toRadians(lat1)) * math.cos(_toRadians(lat2)) *
+            math.sin(dLon / 2) * math.sin(dLon / 2);
+    double c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a));
     return earthRadius * c; // Distance in km
   }
-  
+
   double _toRadians(double degree) {
-    return degree * (3.141592653589793 / 180);
+    return degree * (math.pi / 180);
   }
 }

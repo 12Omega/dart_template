@@ -42,21 +42,21 @@ class _HistoryScreenState extends State<HistoryScreen> with SingleTickerProvider
     try {
       final bookingService = Provider.of<BookingService>(context, listen: false);
       final bookings = await bookingService.getUserBookings();
-      
+
       final now = DateTime.now();
-      
+
       if (mounted) {
         setState(() {
           _activeBookings = bookings.where((booking) {
-            return booking.endTime.isAfter(now) && 
-                   booking.status != BookingStatus.cancelled;
+            return booking.endTime.isAfter(now) &&
+                booking.status != BookingStatus.cancelled;
           }).toList();
-          
+
           _pastBookings = bookings.where((booking) {
-            return booking.endTime.isBefore(now) || 
-                   booking.status == BookingStatus.cancelled;
+            return booking.endTime.isBefore(now) ||
+                booking.status == BookingStatus.cancelled;
           }).toList();
-          
+
           _isLoading = false;
         });
       }
@@ -95,7 +95,7 @@ class _HistoryScreenState extends State<HistoryScreen> with SingleTickerProvider
         final bookingService = Provider.of<BookingService>(context, listen: false);
         await bookingService.updateBookingStatus(booking.id, BookingStatus.cancelled);
         await _loadBookings(); // Refresh the list
-        
+
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -138,43 +138,43 @@ class _HistoryScreenState extends State<HistoryScreen> with SingleTickerProvider
               ],
             ),
           ),
-          
+
           // Tab Content
           Expanded(
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : _errorMessage.isNotEmpty
-                    ? Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              _errorMessage,
-                              style: TextStyle(color: Colors.red[700]),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: 16),
-                            ElevatedButton(
-                              onPressed: _loadBookings,
-                              child: const Text('Try Again'),
-                            ),
-                          ],
-                        ),
-                      )
-                    : TabBarView(
-                        controller: _tabController,
-                        children: [
-                          // Active Tab
-                          _activeBookings.isEmpty
-                              ? _buildEmptyState('You have no active bookings')
-                              : _buildBookingsList(_activeBookings, true),
-                          
-                          // Past Tab
-                          _pastBookings.isEmpty
-                              ? _buildEmptyState('No booking history found')
-                              : _buildBookingsList(_pastBookings, false),
-                        ],
-                      ),
+                ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    _errorMessage,
+                    style: TextStyle(color: Colors.red[700]),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: _loadBookings,
+                    child: const Text('Try Again'),
+                  ),
+                ],
+              ),
+            )
+                : TabBarView(
+              controller: _tabController,
+              children: [
+                // Active Tab
+                _activeBookings.isEmpty
+                    ? _buildEmptyState('You have no active bookings')
+                    : _buildBookingsList(_activeBookings, true),
+
+                // Past Tab
+                _pastBookings.isEmpty
+                    ? _buildEmptyState('No booking history found')
+                    : _buildBookingsList(_pastBookings, false),
+              ],
+            ),
           ),
         ],
       ),
@@ -282,7 +282,7 @@ class _BookingCard extends StatelessWidget {
           // Booking Status Bar
           Container(
             decoration: BoxDecoration(
-              color: _getStatusColor().withOpacity(0.1),
+              color: _getStatusColor().withAlpha((255 * 0.1).round()), // Replaced withOpacity
               borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
@@ -319,7 +319,7 @@ class _BookingCard extends StatelessWidget {
               ],
             ),
           ),
-          
+
           // Booking Content
           Padding(
             padding: const EdgeInsets.all(16),
@@ -399,7 +399,7 @@ class _BookingCard extends StatelessWidget {
               ],
             ),
           ),
-          
+
           // Actions
           if (isActive && booking.status != BookingStatus.cancelled)
             Padding(
