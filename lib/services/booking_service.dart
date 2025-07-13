@@ -14,7 +14,6 @@ class BookingService {
       status: BookingStatus.pending, // Initial status
     );
     // TODO: Replace with actual API call and response handling
-    print('Booking created: ${newBooking.toJson()}');
     return newBooking;
   }
 
@@ -30,13 +29,11 @@ class BookingService {
   Future<void> updateBookingStatus(String bookingId, BookingStatus status) async {
     await Future.delayed(const Duration(milliseconds: 500));
     // TODO: Replace with actual API call to update booking status
-    print('Booking $bookingId status updated to $status');
   }
 
   // Placeholder for cancelling a booking
   Future<void> cancelBooking(String bookingId) async {
     await Future.delayed(const Duration(milliseconds: 500));
     // TODO: Replace with actual API call to cancel booking
-    print('Booking $bookingId cancelled');
   }
 }

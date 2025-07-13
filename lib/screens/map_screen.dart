@@ -10,7 +10,7 @@ import 'package:smart_parking_app/services/parking_service.dart';
 import 'package:smart_parking_app/utils/constants.dart';
 
 class MapScreen extends StatefulWidget {
-  const MapScreen({Key? key}) : super(key: key);
+  const MapScreen({super.key});
 
   @override
   State<MapScreen> createState() => _MapScreenState();
@@ -51,9 +51,7 @@ class _MapScreenState extends State<MapScreen> {
       }
 
       // Get current position
-      final Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
-      );
+      final Position position = await Geolocator.getCurrentPosition();
 
       setState(() {
         _currentPosition = LatLng(position.latitude, position.longitude);
@@ -320,10 +318,9 @@ class _ParkingSpotBottomSheet extends StatelessWidget {
   final VoidCallback onBookNow;
 
   const _ParkingSpotBottomSheet({
-    Key? key,
     required this.parkingSpot,
     required this.onBookNow,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -470,11 +467,10 @@ class _InfoItem extends StatelessWidget {
   final String value;
 
   const _InfoItem({
-    Key? key,
     required this.icon,
     required this.title,
     required this.value,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

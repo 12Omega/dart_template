@@ -7,7 +7,7 @@ import 'package:smart_parking_app/services/auth_service.dart';
 import 'package:smart_parking_app/utils/constants.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -56,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
 
     if (confirm == true) {
+      if (!mounted) return;
       final authService = Provider.of<AuthService>(context, listen: false);
       await authService.logout();
       if (mounted) {
@@ -122,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class _ProfileScreen extends StatelessWidget {
-  const _ProfileScreen({Key? key}) : super(key: key);
+  const _ProfileScreen();
 
   @override
   Widget build(BuildContext context) {
@@ -231,13 +232,13 @@ class _ProfileScreen extends StatelessWidget {
           _ProfileMenuItem(
             icon: Icons.exit_to_app,
             title: 'Logout',
-            onTap: () {
-              Provider.of<AuthService>(context, listen: false).logout().then((_) {
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => const LoginScreen()),
-                      (route) => false,
-                );
-              });
+            onTap: () async {
+              await Provider.of<AuthService>(context, listen: false).logout();
+              if (!context.mounted) return;
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => const LoginScreen()),
+                    (route) => false,
+              );
             },
           ),
         ],
@@ -252,11 +253,10 @@ class _ProfileMenuItem extends StatelessWidget {
   final VoidCallback onTap;
 
   const _ProfileMenuItem({
-    Key? key,
     required this.icon,
     required this.title,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -18,10 +18,10 @@ class User {
     List<String>? favoriteSpots,
     DateTime? createdAt,
     DateTime? updatedAt,
-  }) : 
-    this.favoriteSpots = favoriteSpots ?? [],
-    this.createdAt = createdAt ?? DateTime.now(),
-    this.updatedAt = updatedAt ?? DateTime.now();
+  }) :
+        favoriteSpots = favoriteSpots ?? [],
+        createdAt = createdAt ?? DateTime.now(),
+        updatedAt = updatedAt ?? DateTime.now();
 
   Map<String, dynamic> toMap() {
     return {
@@ -42,12 +42,12 @@ class User {
       email: map['email'] ?? '',
       phoneNumber: map['phoneNumber'],
       favoriteSpots: List<String>.from(map['favoriteSpots'] ?? []),
-      createdAt: map['createdAt'] != null 
-        ? DateTime.parse(map['createdAt'])
-        : null,
-      updatedAt: map['updatedAt'] != null 
-        ? DateTime.parse(map['updatedAt'])
-        : null,
+      createdAt: map['createdAt'] != null
+          ? DateTime.parse(map['createdAt'])
+          : null,
+      updatedAt: map['updatedAt'] != null
+          ? DateTime.parse(map['updatedAt'])
+          : null,
     );
   }
 

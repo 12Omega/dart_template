@@ -7,7 +7,7 @@ import 'package:smart_parking_app/services/booking_service.dart';
 import 'package:smart_parking_app/utils/constants.dart';
 
 class HistoryScreen extends StatefulWidget {
-  const HistoryScreen({Key? key}) : super(key: key);
+  const HistoryScreen({super.key});
 
   @override
   State<HistoryScreen> createState() => _HistoryScreenState();
@@ -91,6 +91,7 @@ class _HistoryScreenState extends State<HistoryScreen> with SingleTickerProvider
 
     if (confirm == true) {
       try {
+        if (!mounted) return;
         setState(() => _isLoading = true);
         final bookingService = Provider.of<BookingService>(context, listen: false);
         await bookingService.updateBookingStatus(booking.id, BookingStatus.cancelled);
@@ -232,11 +233,10 @@ class _BookingCard extends StatelessWidget {
   final VoidCallback? onCancel;
 
   const _BookingCard({
-    Key? key,
     required this.booking,
     required this.isActive,
     this.onCancel,
-  }) : super(key: key);
+  });
 
   Color _getStatusColor() {
     switch (booking.status) {
@@ -248,8 +248,6 @@ class _BookingCard extends StatelessWidget {
         return Colors.red;
       case BookingStatus.completed:
         return Colors.blue;
-      default:
-        return Colors.grey;
     }
   }
 
@@ -263,8 +261,6 @@ class _BookingCard extends StatelessWidget {
         return 'Cancelled';
       case BookingStatus.completed:
         return 'Completed';
-      default:
-        return 'Unknown';
     }
   }
 
@@ -440,10 +436,9 @@ class _BookingInfoChip extends StatelessWidget {
   final String label;
 
   const _BookingInfoChip({
-    Key? key,
     required this.icon,
     required this.label,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

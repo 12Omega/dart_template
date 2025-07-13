@@ -3,26 +3,16 @@ import '../../domain/entities/booking_entity.dart';
 
 class BookingModel extends BookingEntity {
   const BookingModel({
-    required String id,
-    required String parkingSpotId,
-    required String parkingSpotName,
-    required DateTime startTime,
-    required DateTime endTime,
-    required String vehicleType,
-    required String vehiclePlate,
-    required double amount,
-    required BookingStatus status,
-  }) : super(
-          id: id,
-          parkingSpotId: parkingSpotId,
-          parkingSpotName: parkingSpotName,
-          startTime: startTime,
-          endTime: endTime,
-          vehicleType: vehicleType,
-          vehiclePlate: vehiclePlate,
-          amount: amount,
-          status: status,
-        );
+    required super.id,
+    required super.parkingSpotId,
+    required super.parkingSpotName,
+    required super.startTime,
+    required super.endTime,
+    required super.vehicleType,
+    required super.vehiclePlate,
+    required super.amount,
+    required super.status,
+  });
 
   factory BookingModel.fromJson(Map<String, dynamic> json) {
     return BookingModel(

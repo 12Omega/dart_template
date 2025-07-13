@@ -13,9 +13,9 @@ class BookingScreen extends StatefulWidget {
   final ParkingSpot parkingSpot;
 
   const BookingScreen({
-    Key? key,
+    super.key,
     required this.parkingSpot,
-  }) : super(key: key);
+  });
 
   @override
   State<BookingScreen> createState() => _BookingScreenState();
@@ -94,6 +94,7 @@ class _BookingScreenState extends State<BookingScreen> {
           _endDate = newEndDate;
         });
       } else {
+        if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('End time must be after start time'),
@@ -397,11 +398,10 @@ class _TimeSelection extends StatelessWidget {
   final VoidCallback onTap;
 
   const _TimeSelection({
-    Key? key,
     required this.label,
     required this.time,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -461,10 +461,9 @@ class _BookingInfoChip extends StatelessWidget {
   final String label;
 
   const _BookingInfoChip({
-    Key? key,
     required this.icon,
     required this.label,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -12,9 +12,9 @@ class PaymentScreen extends StatefulWidget {
   final Booking booking;
 
   const PaymentScreen({
-    Key? key,
+    super.key,
     required this.booking,
-  }) : super(key: key);
+  });
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
@@ -39,9 +39,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
           BookingStatus.confirmed
       );
 
-      if (mounted) {
-        _showPaymentSuccessDialog();
-      }
+      if (!mounted) return;
+      _showPaymentSuccessDialog();
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

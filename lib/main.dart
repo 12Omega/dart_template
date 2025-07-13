@@ -13,7 +13,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        Provider(create: (_) => AuthService()), // Changed to Provider
+        Provider(create: (_) => AuthService()),
         Provider(create: (_) => BookingService()),
         Provider(create: (_) => ParkingService()),
       ],
@@ -23,7 +23,7 @@ void main() async {
 }
 
 class SmartParkingApp extends StatelessWidget {
-  const SmartParkingApp({Key? key}) : super(key: key);
+  const SmartParkingApp({super.key});
 
   @override
   Widget build(BuildContext context) {
