@@ -39,8 +39,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
           BookingStatus.confirmed
       );
 
-      if (!mounted) return;
-      _showPaymentSuccessDialog();
+      if (mounted) {
+        _showPaymentSuccessDialog();
+      }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

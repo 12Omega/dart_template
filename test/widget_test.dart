@@ -7,13 +7,25 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
+import 'package:provider/provider.dart';
 import 'package:smart_parking_app/main.dart';
+import 'package:smart_parking_app/services/auth_service.dart';
+import 'package:smart_parking_app/services/booking_service.dart';
+import 'package:smart_parking_app/services/parking_service.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const SmartParkingApp());
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          Provider(create: (_) => AuthService()),
+          Provider(create: (_) => BookingService()),
+          Provider(create: (_) => ParkingService()),
+        ],
+        child: const SmartParkingApp(),
+      ),
+    );
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
